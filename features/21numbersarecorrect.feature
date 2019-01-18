@@ -78,7 +78,12 @@ Feature: Program output should be correct
 
 	Scenario: execution time is < 5 seconds
 		Given the default aruba exit timeout is 0 seconds
-		When I successfully run `srpt /var/classes/cs3030/lab2/testfiles` for up to 5 seconds
+		Given a folder of assorted files in testfiles1
+		When I successfully run `srpt testfiles1` for up to 5 seconds
+		Given a folder of assorted files in testfiles2
+		When I successfully run `srpt testfiles2` for up to 5 seconds
+		Given a folder of assorted files in testfiles3
+		When I successfully run `srpt testfiles3` for up to 5 seconds
 		Then 40 points are awarded 
 
 	Scenario: exit code is zero for normal execution
