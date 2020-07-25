@@ -1,3 +1,5 @@
+@announce-output
+
 Feature: Script must be present and be executable
 	Scenario: srpt must be found
 		When I run `getfile` 
