@@ -1,4 +1,4 @@
-@announce-output
+#@announce-output
 
 Feature: Script must be present and be executable
 	Scenario: srpt must be found

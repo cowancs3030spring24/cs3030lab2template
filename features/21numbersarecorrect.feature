@@ -1,4 +1,4 @@
-@announce-output
+#@announce-output
 
 Feature: Program output should be correct
 	Scenario: return code 1 if PATH missing
