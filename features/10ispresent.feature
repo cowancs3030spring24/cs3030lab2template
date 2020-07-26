@@ -1,5 +1,3 @@
-#@announce-output
-
 Feature: Script must be present and be executable
 	Scenario: srpt must be found
 		When I run `getfile` 
@@ -8,4 +6,5 @@ Feature: Script must be present and be executable
 
 	Scenario: srpt must be executable
 		When I run `srpt` 
+        And OUTPUT is printed
 		Then 10 points are awarded
