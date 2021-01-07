@@ -29,7 +29,7 @@ class TestFiles
 		if Dir.exists?(@topFolderPath)
 			`rm -rf #{@topFolderPath}`
 		end
-		#puts "ENV: #{ENV['home']}"
+		#log "ENV: #{ENV['home']}"
 		Dir.mkdir(@topFolderPath, 0700)
 		@folders = makeFolders(@topFolderPath)
 		@files, @fileSizes = makeFiles(@folders)
@@ -48,7 +48,7 @@ class TestFiles
 	def makeFolders(topFolder)
 		r = Random.new
 		totalFolders = r.rand(FOLDERS)
-		#puts "Creating #{totalFolders} folders"
+		#log "Creating #{totalFolders} folders"
 		folders = Array.new
 		#folders[0] = "InvalidFolderName" # skip the zero entry
 		# make a few top level folders so we have a place to start
@@ -114,13 +114,13 @@ class TestFiles
 			fileNumber = r.rand(0..files.size-1)
 			file = files[fileNumber]
 			if fileSizes[fileNumber] > 500000
-				#puts "LargeFiles redo #{file}"
+				#log "LargeFiles redo #{file}"
 				redo
 			end
 			#cmd = "dd if=/dev/zero of=#{file} count=513 bs=1024 status=none"
 			#cmd = "dd if=/dev/zero of=#{file} count=513 bs=1024 2&>1 >/dev/null"
 			cmd = "dd if=/dev/zero of=#{file} count=513 bs=1024"
-			#puts cmd
+			#log cmd
 			`#{cmd} 2>&1 >/dev/null`
 			#`#{cmd}`
 			largeFiles << file
@@ -144,12 +144,12 @@ class TestFiles
 				oldname.include?(".bmp") or
 				oldname.include?(".gif") or
 				oldname.include?(".o")
-				#puts "Graphics redo: #{oldname}"
+				#log "Graphics redo: #{oldname}"
 				redo
 			end
 			suffix = [".jpg", ".bmp", ".gif"][r.rand(0..2)]
 			newname = "#{oldname}#{suffix}"
-			#puts "Old:#{oldname} New:#{newname}"
+			#log "Old:#{oldname} New:#{newname}"
 			File.rename(oldname, newname)
 			files[fileNumber] = newname 
 			graphicsFiles << newname
@@ -172,11 +172,11 @@ class TestFiles
 				oldname.include?(".bmp") or
 				oldname.include?(".gif") or
 				oldname.include?(".o")
-				#puts "Temp redo: #{oldname}"
+				#log "Temp redo: #{oldname}"
 				redo
 			end
 			newname = "#{oldname}.o"
-			#puts "Old:#{oldname} New:#{newname}"
+			#log "Old:#{oldname} New:#{newname}"
 			File.rename(oldname, newname)
 			files[fileNumber] = newname 
 			tempFiles << newname
@@ -199,7 +199,7 @@ class TestFiles
 				redo
 			end
 			File.chmod(0755, name)
-			#puts "Executable: :#{name}"
+			#log "Executable: :#{name}"
 			executableFiles << name
 		end
 		return executableFiles
@@ -221,11 +221,11 @@ class TestFiles
 			symDir = folders[symDirNumber]
 			symName = File.join(symDir, baseName)
 			if symlinks.include?(symName) or symName == name
-				#puts "symlink redo: #{symName}"
+				#log "symlink redo: #{symName}"
 				redo
 			end
 			File.symlink(name, symName)
-			#puts "Symlink: :#{symName} of #{name}"
+			#log "Symlink: :#{symName} of #{name}"
 			symlinks << symName
 		end
 		return symlinks
@@ -250,7 +250,7 @@ class TestFiles
 			dateString = oldDate.strftime("%Y%m%d%H%M.%S")	
 			cmd = "touch -t #{dateString} #{name}"	
 			`#{cmd}`	
-			#puts "Old file date:#{dateString}: #{name}"
+			#log "Old file date:#{dateString}: #{name}"
 			oldFiles << name
 		end
 		return oldFiles
@@ -261,11 +261,11 @@ class TestFiles
 
 end
 
-#puts "Folders:\n", testFiles.folders
-#puts "Files:\n", testFiles.files
-#puts "Large files:\n", testFiles.largeFiles
+#log "Folders:\n", testFiles.folders
+#log "Files:\n", testFiles.files
+#log "Large files:\n", testFiles.largeFiles
 
-#puts "Directories: #{testFiles.folders.count}", 
+#log "Directories: #{testFiles.folders.count}", 
 #	" Files: #{testFiles.files.count}",
 #	" Sym links: #{testFiles.symlinks.count}",
 #	" Old Files: #{testFiles.oldFiles.count}",

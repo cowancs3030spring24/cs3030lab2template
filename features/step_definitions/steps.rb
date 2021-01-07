@@ -35,7 +35,7 @@ end
 Given /^header ends with the current date$/ do
 	date = `date`.chomp
 	hostname = `hostname`.chomp
-	#puts "Look TED, all_output: #{all_output}"
+	#log "Look TED, all_output: #{all_output}"
 	# dates look like this: Mon May 11 14:12:24 MDT 2015
 	temp_output = all_commands.map { |c| c.output }.join("\n")
 	if !temp_output.match(/SearchReport\s+#{hostname}\s+#{@testFiles.topFolder}\s+([MTWFS][a-z][a-z])\s+([JFMASOND][a-z][a-z])\s+([ \d]\d)\s+(\d\d)\:(\d\d)\:(\d\d)\s+([A-Z]{3})\s+(\d{4})/)
@@ -49,8 +49,8 @@ Given /^header ends with the current date$/ do
 	second = $6.to_i
 	hisDate = Time.new(yyyy,mon,day,hour,minute,second)
 	now = Time.now
-	#puts "His date: #{hisDate}"
-	#puts "My date: #{now}"
+	#log "His date: #{hisDate}"
+	#log "My date: #{now}"
 	#if (now - hisDate).abs > 60*60*24
 	if (now - hisDate).abs > 60 
 		raise("#{all_output} does not contain a current date as produced by the Linux date command")	
