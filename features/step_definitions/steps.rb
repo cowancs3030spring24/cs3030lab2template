@@ -17,6 +17,7 @@ Given /^OUTPUT is printed/ do
     end
 end
 
+
 Given /^a folder of assorted files in (.*)/ do |folder|
 	@testFiles = TestFiles.new(folder)
 	#log "Top folder: #{@testFiles.topFolder}"
